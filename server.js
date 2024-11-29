@@ -52,6 +52,12 @@ app.use((req, res, next) => {
     }
   });
 
+// Catch-all route to handle SPA
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../coursework/dist', 'index.html'));
+});
+
+
 
 const PORT = 4000;
 app.listen(PORT, () => {
