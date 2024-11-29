@@ -41,7 +41,16 @@ app.get('/vue-coursework/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../coursework/dist', 'index.html'));
 });
 
-
+// Use a middleware to log errors if static files cannot be served
+app.use((req, res, next) => {
+  staticMiddleware(req, res, (err) => {
+    if (err) {
+      console.error(`Error serving static file: ${err.message}`);
+      res.status(500).send('Internal Server Error while serving static files.');
+    } else {
+      next();
+    }
+  });
 
 
 const PORT = 4000;
