@@ -9,6 +9,8 @@ const { MongoClient } = require('mongodb');
 // Create an Express application
 const app = express();
 
+
+
 // MongoDB Atlas connection
 const MONGO_URI = 'mongodb+srv://lesley:Lesleyp1@backend-store.lprk2.mongodb.net/'; //  MongoDB Atlas URI
 const client = new MongoClient(MONGO_URI);
@@ -28,6 +30,7 @@ let ordersCollection;
     console.error('Error connecting to MongoDB Atlas:', err);
   }
 })();
+
 
 // Middleware setup
 app.use(cors());
@@ -51,10 +54,11 @@ app.use((req, res, next) => {
       next();
     }
   });
+});
 
 // Catch-all route to handle SPA
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../coursework/dist', 'index.html'));
+    res.sendFile(path.join(__dirname, '../coursework/dist', 'index.html'));
 });
 
 
@@ -128,7 +132,12 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
+
+
+
+// Start the server
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
