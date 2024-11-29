@@ -34,11 +34,11 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("short"));
 
-const staticMiddleware = express.static(path.join(__dirname, '../../coursework/dist'));
+const staticMiddleware = express.static(path.join(__dirname, '../coursework/dist'));
 app.use('/vue-coursework', staticMiddleware); // Serve static files under the base URL
 
 app.get('/vue-coursework/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../coursework/dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../coursework/dist', 'index.html'));
 });
 
 
