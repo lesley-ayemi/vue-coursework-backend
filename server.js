@@ -108,6 +108,25 @@ app.put('/api/products/:id', async (req, res) => {
   }
 });
 
+// API route to fetch all products
+app.get('/api/products', async (req, res) => {
+  try {
+    const products = await productsCollection.find({}).toArray(); // Fetch all products
+    const baseUrl = "http://localhost:4000/images";
+    const updatedProducts = products.map((product) => {
+      return {
+        ...product,
+        subject_image: product.subject_image.startsWith('http') 
+          ? product.subject_image 
+          : `${baseUrl}/${path.basename(product.subject_image)}`,
+      };
+    });
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 const PORT = 4000;
 app.listen(PORT, () => {
