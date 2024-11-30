@@ -38,11 +38,11 @@ app.use(express.json());
 app.use(morgan("short"));
 
 const staticMiddleware = express.static(path.join(__dirname, '../coursework/dist'));
-app.use('/vue-coursework', staticMiddleware); // Serve static files under the base URL
+// app.use('/vue-coursework', staticMiddleware); // Serve static files under the base URL
 
-app.get('/vue-coursework/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../coursework/dist', 'index.html'));
-});
+// app.get('/vue-coursework/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../coursework/dist', 'index.html'));
+// });
 
 // Use a middleware to log errors if static files cannot be served
 app.use((req, res, next) => {
@@ -57,9 +57,9 @@ app.use((req, res, next) => {
 });
 
 // Catch-all route to handle SPA
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../coursework/dist', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../coursework/dist', 'index.html'));
+// });
 
 
 app.post('/api/orders', async (req, res) => {
@@ -116,15 +116,6 @@ app.put('/api/products/:id', async (req, res) => {
 app.get('/api/products', async (req, res) => {
   try {
     const products = await productsCollection.find({}).toArray(); // Fetch all products
-    const baseUrl = "http://localhost:4000/images";
-    const updatedProducts = products.map((product) => {
-      return {
-        ...product,
-        subject_image: product.subject_image.startsWith('http') 
-          ? product.subject_image 
-          : `${baseUrl}/${path.basename(product.subject_image)}`,
-      };
-    });
     res.json(products);
   } catch (error) {
     console.error('Error fetching products:', error);
